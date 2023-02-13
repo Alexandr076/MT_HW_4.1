@@ -24,16 +24,15 @@ public class Main {
         return text.toString();
     }
 
-    public static void main (String[]args) throws InterruptedException {
-        Thread generatorThread = new  Thread(() -> {
+    public static void main(String[] args) throws InterruptedException {
+        Thread generatorThread = new Thread(() -> {
             for (int i = 0; i <= iterationCount; i++) {
                 String str = generateText(template, stringLength);
                 try {
                     queue_A.put(str);
                     queue_B.put(str);
                     queue_C.put(str);
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     return;
                 }
             }
@@ -43,13 +42,13 @@ public class Main {
         new Thread(() -> {
             int length = 0;
             int maxSize = 0;
-            for (int i = 0; i <= iterationCount; i++){
+            for (int i = 0; i <= iterationCount; i++) {
                 try {
                     length = queue_A.take().replace(letter_A, "").length();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                maxSize = stringLength - length > maxSize? stringLength - length:maxSize;
+                maxSize = stringLength - length > maxSize ? stringLength - length : maxSize;
                 length = 0;
             }
             System.out.println("Max size of letter 'a' is: " + maxSize);
@@ -58,13 +57,13 @@ public class Main {
         new Thread(() -> {
             int length = 0;
             int maxSize = 0;
-            for (int i = 0; i <= iterationCount; i++){
+            for (int i = 0; i <= iterationCount; i++) {
                 try {
                     length = queue_B.take().replace(letter_B, "").length();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                maxSize = stringLength - length > maxSize? stringLength - length:maxSize;
+                maxSize = stringLength - length > maxSize ? stringLength - length : maxSize;
                 length = 0;
             }
             System.out.println("Max size of letter 'b' is: " + maxSize);
@@ -73,13 +72,13 @@ public class Main {
         new Thread(() -> {
             int length = 0;
             int maxSize = 0;
-            for (int i = 0; i <= iterationCount; i++){
+            for (int i = 0; i <= iterationCount; i++) {
                 try {
                     length = queue_C.take().replace(letter_C, "").length();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                maxSize = stringLength - length > maxSize? stringLength - length:maxSize;
+                maxSize = stringLength - length > maxSize ? stringLength - length : maxSize;
                 length = 0;
             }
             System.out.println("Max size of letter 'c' is: " + maxSize);
